@@ -1,5 +1,18 @@
-<ion-view view-title="Playlist">
+<ion-view hide-nav-bar="false" hide-back-button="false" >
+  <ion-nav-title>
+    140
+  </ion-nav-title>
+  <ion-nav-buttons side="left">
+    <button class="button" ng-click="myGoBack()">
+      Back
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="save()">
+      Save
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-    <h1>Playlist</h1>
+    <textarea ng-model="tweetContent.text" ng-change="updateCounter()"></textarea>
   </ion-content>
 </ion-view>
