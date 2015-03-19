@@ -9,12 +9,12 @@
   </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="shouldShowDelete" can-swipe="listCanSwipe">
-      <ion-item ng-repeat="playlist in playlists track by $index" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.content}}
-        <ion-option-button class="button-positive" ng-click="copy(playlist, $index)">
+      <ion-item ng-repeat="tweet in tweets track by $index" href="#/app/tweets/{{tweet.id}}">
+        {{tweet.content}}
+        <ion-option-button class="button-positive" ng-click="copy(tweet)">
           Copy
         </ion-option-button>
-        <ion-option-button class="button-assertive" ng-click="delete(playlist, $index)">
+        <ion-option-button class="button-assertive" ng-click="delete(tweet, $index)">
           Delete
         </ion-option-button>
       </ion-item>

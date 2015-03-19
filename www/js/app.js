@@ -30,25 +30,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     controller: 'AppCtrl'
   })
 
-    .state('app.playlists', {
-      url: "/playlists",
+    .state('app.tweets', {
+      url: "/tweets",
       views: {
         'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/tweets.html",
+          controller: 'TweetsCtrl'
         }
       }
     })
 
   .state('app.single', {
-    url: "/playlists/:tweetId",
+    url: "/tweets/:tweetId",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/tweet.html",
+        controller: 'TweetCtrl'
       }
     }
   })
 
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/tweets');
 });
