@@ -11,19 +11,21 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlaylistCtrl', function($scope, $stateParams, Tweet, $ionicHistory, $ionicNavBarDelegate) {
     $scope.playlist = Tweet.get({tweetId: $stateParams.tweetId});
 
-    $scope.tweetContent = "text";
     $scope.myGoBack = function() {
       console.log('back');
       $ionicHistory.goBack();
     };
 
     $scope.save = function() {
-
+        var tweet = new Tweet();
+        tweet.content = "wawawawa";
+        tweet.$save();
+        //$scope.playlist.$save({tweetId: $stateParams.tweetId});
       console.log('save')
     };
 
     $scope.updateCounter = function() {
-      console.log($scope.tweetContent);
-      $ionicNavBarDelegate.title('wawa')
+      console.log($scope.playlist.content.length);
+      $ionicNavBarDelegate.title(140 - $scope.playlist.content.length)
     }
 });
