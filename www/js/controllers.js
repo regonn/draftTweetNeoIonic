@@ -1,11 +1,14 @@
 angular.module('starter.controllers', ['starter.services', 'ngCordova'])
 
-.controller('AppCtrl', function() {
+.controller('AppCtrl', function($scope, $rootScope, Tweet) {
+    $scope.syncTweets = function(){
+      $rootScope.tweets = Tweet.query();
+    }
 })
 
 .controller('TweetsCtrl', function($scope, Tweet, $state, $cordovaClipboard, $ionicListDelegate) {
   $scope.listCanSwipe = true;
-  $scope.tweets = Tweet.query();
+  $scope.syncTweets();
 
   $scope.newTweet = function() {
     $state.go('app.single', {tweetId: 'new'})
@@ -13,7 +16,7 @@ angular.module('starter.controllers', ['starter.services', 'ngCordova'])
 
   $scope.delete = function(tweet, $index) {
     tweet.$delete({tweetId: tweet.id},function(){
-      $scope.tweets.splice($index, 1)
+      $scope.tweets.splice($index, 1);
       $ionicListDelegate.closeOptionButtons()
     })
   };
@@ -21,13 +24,14 @@ angular.module('starter.controllers', ['starter.services', 'ngCordova'])
   $scope.copy = function(tweet) {
     console.log("copy" + tweet.content);
     $cordovaClipboard.copy(tweet.content).then(function (){
-        alert("Copied!")
+        alert("Copied!");
       }, function() {
+        alert("Sorry Failed!");
       });
   };
 })
 
-.controller('TweetCtrl', function($scope, $stateParams, Tweet, $ionicHistory, $ionicNavBarDelegate, $state, $window) {
+.controller('TweetCtrl', function($scope, $stateParams, Tweet, $ionicHistory, $ionicNavBarDelegate, $state, $rootScope) {
     if ($stateParams.tweetId == "new") {
       $scope.tweet = new Tweet;
     }else{
@@ -36,21 +40,22 @@ angular.module('starter.controllers', ['starter.services', 'ngCordova'])
       })
     }
 
-    $scope.goBack = function() {
-      $state.go('app.tweets')
-    };
-
     $scope.save = function() {
       if ($stateParams.tweetId == "new") {
         $scope.tweet.$save(function(){
-          $window.location.reload(true)
+          $scope.goTweets();
         });
       }else{
         $scope.tweet.$update({tweetId: $stateParams.tweetId},function(){
-          $window.location.reload(true)
+          $scope.goTweets();
         });
       }
-      $state.go('app.tweets', {}, {reload: true});
+
+    };
+
+    $scope.goTweets = function(){
+      $scope.syncTweets();
+      $state.go('app.tweets');
     };
 
     $scope.updateCounter = function() {
